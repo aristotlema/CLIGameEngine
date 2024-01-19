@@ -61,6 +61,22 @@ namespace CLIGameEngine
         {
             return _currentTurn;
         }
+
+        public void EndGame()
+        {
+            _gameActive = false;
+        }
+
+        public string MenuOptions(Enum options, string menuPrompt)
+        {
+            int counter = 1;
+            foreach (Enum option in Enum.GetValues(options.GetType()))
+            {
+                Console.WriteLine(counter +". " + option);
+                counter++;
+            }
+            return InputHandler(menuPrompt);
+        }
     }
 
     public interface IGame
@@ -71,12 +87,12 @@ namespace CLIGameEngine
 
     public class Game : IGame
     {
-        public GameEngine gameEngine { get; set; }
+        public GameEngine gameEngine { get; private set; }
         public Game()
         {
-            Console.WriteLine("Starting Game Engine");
+            //Console.WriteLine("Starting Game Engine");
             gameEngine = new GameEngine();
-            Console.WriteLine("Game Engine has been started");
+            //Console.WriteLine("Game Engine has been started");
             gameEngine.RunGame(Start, Update);
         }
         protected virtual void Start() { }
